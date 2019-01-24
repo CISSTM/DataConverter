@@ -53,4 +53,4 @@ def save_data(topic, data):
         f.write(json.dumps(write_array))
 
 
-total_function(1103101322)
+#total_function(1103101322)
