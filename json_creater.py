@@ -3,34 +3,33 @@ import json
 import logging
 from os import path
 basepath = path.dirname(__file__)
+write_path =  basepath + 'joepie.json'
 
+def total_function(x):
+    #Your variable that you received from the sattelite.
+    s = 0
 
-#Your variable that you received from the sattelite.
-x = 1103101222
-s = 0
+    #Changes the variable into a string (and back). This way you can read a specific part of your number.
+    y = str(x)
+    z = int(y[2:4])
 
-#Changes the variable into a string (and back). This way you can read a specific part of your number.
-y = str(x)
-z = int(y[2:4])
+    #Checks the type of data (t = temperature; p = pressure; a = alltitude)
+    if z == 1:
+        t = int(y[4:8])
+    elif z != 1:
+        t = None
 
-#Checks the type of data (t = temperature; p = pressure; a = alltitude)
-if z == 1:
-    t = int(y[4:8])
-elif z != 1:
-    t = None
+    if z == 2:
+        p = int(y[4:8])
+    elif z != 2:
+        p = None
 
-if z == 2:
-    p = int(y[4:8])
-elif z != 2:
-    p = None
+    if z == 3:
+        a = int(y[4:8])
+    elif z != 3:
+        a = None
 
-if z == 3:
-    a = int(y[4:8])
-elif z != 3:
-    a = None
-
-
-def return_data():
+    #Check type to save
     if t is not None:
         save_data("temperature", t)
     elif p is not None:
@@ -41,10 +40,17 @@ def return_data():
         return "Wrong data error"
 
 def save_data(topic, data):
-    to_write = {
+    current_data = {
         topic: data
     }
-    with open(basepath + 'joepie.json', 'w+') as f:
-        f.write(json.dumps(to_write))
+    write_array = []
+    with open(write_path, 'r') as curr:
+        write_array = json.load(curr)
 
-return_data()
+    with open(write_path, 'w+') as f:
+        write_array.append(current_data)
+        print (write_array)
+        f.write(json.dumps(write_array))
+
+
+total_function(1103101322)
