@@ -2,7 +2,7 @@ import csv
 import json
 
 infile = open("sample.json", "r")
-outfile = open("file2.csv", "w")
+outfile = open("export.csv", "w")
 
 writer = csv.writer(outfile)
 
@@ -10,9 +10,16 @@ writer = csv.writer(outfile)
 header = '{"s": "sendtime", "t": temperatuur", "p": pressure", "a": "alltitude"}'
 #f = csv.writer(["sendtime", "temperatuur", "pressure", "alltitude"])
 
-writer.writerow('ds') #De header
+writer.writerow(header) #De header
 
 for row in json.loads(infile.read()):
-    writer.writerow(row.values())
+    topic = None
+    for value_name in row.keys():
+        if not value_name == "s":
+            topic = value_name
+    to_save = {
+        topic: row[topic]
+    }
+    writer.writerow(to_save.values())
 
 print("Just completed your csv file!")

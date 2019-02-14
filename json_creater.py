@@ -3,7 +3,7 @@ import json
 import logging
 from os import path
 basepath = path.dirname(__file__)
-write_path =  basepath + 'joepie.json'
+write_path =  basepath + 'export.json'
 
 def total_function(x):
     #Your variable that you received from the sattelite.
@@ -53,4 +53,3 @@ def save_data(topic, data):
         f.write(json.dumps(write_array))
 
 
-#printtotal_function(1103101322)
